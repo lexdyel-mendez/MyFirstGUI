@@ -11,40 +11,70 @@ import javax.swing.JComponent;
 
 public class MyComponent extends JComponent {
 
-	static int counter = 0;
-	
-	static MutableCar theCar = new MutableCar(0,0,Color.BLACK, 10, 1);
-	static Random genRand = new Random();
+	private static int counter = 0;
 
-	public boolean carCrashed(MutableCar c) {
+	private static Vehicle theCars[];
+
+	private static Random genRand = new Random();
+
+	private static boolean someCarWon = false;
+
+	public static final int laneWidth = 50;
+
+	public boolean getSomeCarWon() { return someCarWon; }
+
+	public MyComponent(int numCars) {
+		theCars = new MutableCar[numCars];
+		for(int i=0; i<numCars; i++) {
+			int laneY = i * laneWidth + 10;
+			if (i==0) {
+				theCars[i] = new PoliceCar(0, laneY, Color.RED, 0, 1);
+			}
+			else {
+				theCars[i] = new MutableCar(0, laneY, Color.RED, 0, 1);
+			}
+		}	
+	}
+
+	public boolean carCrashed(Vehicle c) {
 		if (c.getCarDirection() > 0) {
-			if (c.getxPos()+60 >= this.getWidth()) {
+			if (c.getXPos()+60 >= this.getWidth()) {
 				return true;
 			}
 		}
 		else if (c.getCarDirection() < 0) {
-			if (c.getxPos() <= 0) {
+			if (c.getXPos() <= 0) {
 				return true;
 			}			
 		}
-		
+
 		return false;
-		
+
 	}
-	
+
 	public void paintComponent(Graphics g) {		
-			
-		theCar.draw(g);
-		theCar.move(theCar.getCarSpeed()*theCar.getCarDirection(), 0);
-		
-		if (this.carCrashed(theCar)) {
-			theCar.setCarDirection(theCar.getCarDirection()*-1);
+
+		int iMax = 0;
+		for (int i=0; i < theCars.length; i++) {
+			//theCars[i].setColor(Color.RED);
+			if (theCars[iMax].getXPos() < theCars[i].getXPos()) {
+				iMax = i;
+			}
 		}
-		
-//		//MutableCar car2 = new MutableCar(0,40, Color.BLUE);
-//		theCar.setPosition(0, 40);
-//		theCar.draw(g);
-		
+		for (int i=0; i < theCars.length; i++) {
+			if (i!=iMax) {
+				theCars[i].draw(g,theCars[i].getColor());
+			}
+			else {
+				theCars[i].draw(g,Color.GREEN);
+			}
+			theCars[i].move(genRand.nextInt(10), 0);
+			if (this.carCrashed(theCars[i])) {
+				this.someCarWon = true;
+			}
+		}
+		theCars[iMax].draw(g,Color.GREEN);
+
 		System.out.println("Painted " + counter++ + " times");
 	}
 
