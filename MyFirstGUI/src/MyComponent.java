@@ -24,11 +24,14 @@ public class MyComponent extends JComponent {
 	public boolean getSomeCarWon() { return someCarWon; }
 
 	public MyComponent(int numCars) {
-		theCars = new MutableCar[numCars];
+		theCars = new Vehicle[numCars];
 		for(int i=0; i<numCars; i++) {
 			int laneY = i * laneWidth + 10;
 			if (i==0) {
 				theCars[i] = new PoliceCar(0, laneY, Color.RED, 0, 1);
+			}
+			else if (i==1) {
+				theCars[i] = new Truck(0, laneY, Color.BLACK, 0, 1);
 			}
 			else {
 				theCars[i] = new MutableCar(0, laneY, Color.RED, 0, 1);
