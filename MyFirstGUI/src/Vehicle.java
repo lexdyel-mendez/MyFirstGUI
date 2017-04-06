@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Vehicle {
+public abstract class Vehicle {
 	static long count = 0;
 	
 	private double xPos;
@@ -63,6 +63,6 @@ public class Vehicle {
 	}
 
 	
-	public void draw(Graphics g, Color newColor) {
-	}
+	public abstract void draw(Graphics g, Color newColor);
+	
 }
