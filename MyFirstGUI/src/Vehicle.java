@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public abstract class Vehicle {
+public abstract class Vehicle implements Raceable{
 	static long count = 0;
 	
 	private double xPos;

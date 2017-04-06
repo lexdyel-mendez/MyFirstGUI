@@ -11,6 +11,11 @@ import javax.swing.JComponent;
 
 public class MyComponent extends JComponent {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6546239672902333980L;
+
 	private static int counter = 0;
 
 	private static Vehicle theCars[];
